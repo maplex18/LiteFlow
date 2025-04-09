@@ -62,7 +62,7 @@ WORKDIR /app
 
 RUN apk add proxychains-ng
 
-# Use environment variables instead of hardcoded values
+# Use environment variables from .env file during runtime
 ENV NODE_ENV=production
 
 COPY --from=builder /app/public ./public

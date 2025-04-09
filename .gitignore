@@ -39,8 +39,14 @@ dev
 
 # docker-compose env files
 .env
+docker-compose.override.yml
 
+# security files
 *.key
 *.key.pub
+*.pem
+*.cert
 
+# generated files
 masks.json
+.npmrc.docker
