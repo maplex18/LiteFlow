@@ -1,0 +1,112 @@
+.privacy-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  
+  .privacy-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-in-light);
+    position: sticky;
+    top: 0;
+    background-color: var(--white);
+    z-index: 1;
+
+    .privacy-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+
+  .privacy-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 20px;
+
+    section {
+      margin-bottom: 30px;
+
+      h2 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: var(--black);
+      }
+
+      p {
+        margin-bottom: 10px;
+        line-height: 1.6;
+        color: var(--black);
+      }
+
+      ul {
+        list-style-type: disc;
+        margin-left: 20px;
+        margin-top: 10px;
+
+        li {
+          margin-bottom: 8px;
+          line-height: 1.6;
+          color: var(--black);
+        }
+      }
+
+      a {
+        color: var(--primary);
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+// 響應式設計
+@media (max-width: 768px) {
+  .privacy-container {
+    padding: 16px;
+    height: 100vh;
+    border-radius: 0;
+    margin: 0;
+
+    .privacy-header {
+      padding: 16px 0;
+      margin-bottom: 20px;
+
+      .privacy-title {
+        font-size: 20px;
+      }
+    }
+
+    .privacy-content {
+      padding-right: 16px;
+      padding-bottom: 80px; // 為了避免內容被底部工具欄遮擋
+
+      section {
+        margin-bottom: 24px;
+
+        h2 {
+          font-size: 18px;
+          margin-bottom: 12px;
+        }
+
+        p {
+          font-size: 14px;
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+} 
