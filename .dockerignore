@@ -53,8 +53,8 @@ typings
 # local env files
 .env*.local
 
-# Next.js build output
-.next
+# lite.js build output
+.lite
 out
 
 # Nuxt.js build output

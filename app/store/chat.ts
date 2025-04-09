@@ -293,7 +293,7 @@ export const useChatStore = createPersistStore(
         }));
       },
 
-      nextSession(delta: number) {
+      liteSession(delta: number) {
         const n = get().sessions.length;
         const limit = (x: number) => (x + n) % n;
         const i = get().currentSessionIndex;
@@ -310,13 +310,13 @@ export const useChatStore = createPersistStore(
         sessions.splice(index, 1);
 
         const currentIndex = get().currentSessionIndex;
-        let nextIndex = Math.min(
+        let liteIndex = Math.min(
           currentIndex - Number(index < currentIndex),
           sessions.length - 1,
         );
 
         if (deletingLastSession) {
-          nextIndex = 0;
+          liteIndex = 0;
           sessions.push(createEmptySession());
         }
 
@@ -327,7 +327,7 @@ export const useChatStore = createPersistStore(
         };
 
         set(() => ({
-          currentSessionIndex: nextIndex,
+          currentSessionIndex: liteIndex,
           sessions,
         }));
 

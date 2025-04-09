@@ -9,7 +9,7 @@ export class AudioHandler {
   private recordBuffer: Int16Array[] = [];
   private readonly sampleRate = 24000;
 
-  private nextPlayTime: number = 0;
+  private litePlayTime: number = 0;
   private isPlaying: boolean = false;
   private playbackQueue: AudioBufferSourceNode[] = [];
   private playBuffer: Int16Array[] = [];
@@ -96,7 +96,7 @@ export class AudioHandler {
   }
   startStreamingPlayback() {
     this.isPlaying = true;
-    this.nextPlayTime = this.context.currentTime;
+    this.litePlayTime = this.context.currentTime;
   }
 
   stopStreamingPlayback() {
@@ -132,7 +132,7 @@ export class AudioHandler {
 
     const chunkDuration = audioBuffer.length / this.sampleRate;
 
-    source.start(this.nextPlayTime);
+    source.start(this.litePlayTime);
 
     this.playbackQueue.push(source);
     source.onended = () => {
@@ -142,10 +142,10 @@ export class AudioHandler {
       }
     };
 
-    this.nextPlayTime += chunkDuration;
+    this.litePlayTime += chunkDuration;
 
-    if (this.nextPlayTime < this.context.currentTime) {
-      this.nextPlayTime = this.context.currentTime;
+    if (this.litePlayTime < this.context.currentTime) {
+      this.litePlayTime = this.context.currentTime;
     }
   }
   _saveData(data: Int16Array, bytesPerSample = 16): Blob {

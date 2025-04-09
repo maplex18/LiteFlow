@@ -2,7 +2,7 @@ import { type OpenAIListModelResponse } from "@/app/client/platforms/openai";
 import { getServerSideConfig } from "@/app/config/server";
 import { ModelProvider, OpenaiPath } from "@/app/constant";
 import { prettyObject } from "@/app/utils/format";
-import { NextRequest, NextResponse } from "next/server";
+import { liteRequest, liteResponse } from "lite/server";
 import { auth } from "./auth";
 import { requestOpenai } from "./common";
 
@@ -23,20 +23,20 @@ function getModels(remoteModelRes: OpenAIListModelResponse) {
 }
 
 export async function handle(
-  req: NextRequest,
+  req: liteRequest,
   { params }: { params: { path: string[] } },
 ) {
   console.log("[OpenAI Route] params ", params);
 
   if (req.method === "OPTIONS") {
-    return NextResponse.json({ body: "OK" }, { status: 200 });
+    return liteResponse.json({ body: "OK" }, { status: 200 });
   }
 
   const subpath = params.path.join("/");
 
   if (!ALLOWED_PATH.has(subpath)) {
     console.log("[OpenAI Route] forbidden path ", subpath);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         error: true,
         msg: "you are not allowed to request " + subpath,
@@ -49,7 +49,7 @@ export async function handle(
 
   const authResult = auth(req, ModelProvider.GPT);
   if (authResult.error) {
-    return NextResponse.json(authResult, {
+    return liteResponse.json(authResult, {
       status: 401,
     });
   }
@@ -61,7 +61,7 @@ export async function handle(
     if (subpath === OpenaiPath.ListModelPath && response.status === 200) {
       const resJson = (await response.json()) as OpenAIListModelResponse;
       const availableModels = getModels(resJson);
-      return NextResponse.json(availableModels, {
+      return liteResponse.json(availableModels, {
         status: response.status,
       });
     }
@@ -69,6 +69,6 @@ export async function handle(
     return response;
   } catch (e) {
     console.error("[OpenAI] ", e);
-    return NextResponse.json(prettyObject(e));
+    return liteResponse.json(prettyObject(e));
   }
 }

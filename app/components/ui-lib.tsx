@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @lite/lite/no-img-element */
 import styles from "./ui-lib.module.scss";
 import LoadingIcon from "../icons/three-dots.svg";
 import CloseIcon from "../icons/close.svg";
@@ -131,7 +131,7 @@ export function Modal(props: ModalProps) {
     return () => {
       window.removeEventListener("keydown", onKeyDown);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, []);
 
   const [isMax, setMax] = useState(!!props.defaultMax);

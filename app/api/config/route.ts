@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { getServerSideConfig } from "../../config/server";
 import { withDbConnection, getApiKeyFromDb } from "../../utils/db";
 
@@ -36,12 +36,12 @@ export async function GET(request: Request) {
   const username = url.searchParams.get('username');
 
   if (!username) {
-    return NextResponse.json({ error: 'Username is required' }, { status: 400 });
+    return liteResponse.json({ error: 'Username is required' }, { status: 400 });
   }
 
   const upstashConfig = await getUserUpstashConfig(username);
   
-  return NextResponse.json({
+  return liteResponse.json({
     ...serverConfig,
     upstash: upstashConfig
   });
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     const anthropicUrl = await getApiKeyFromDb("ANTHROPIC_URL");
     const anthropicApiVersion = await getApiKeyFromDb("ANTHROPIC_API_VERSION");
     
-    return NextResponse.json({
+    return liteResponse.json({
       ...serverConfig,
       // OpenAI 配置
       apiKey: openaiApiKey,
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error('Error fetching API configurations:', error);
-    return NextResponse.json({ 
+    return liteResponse.json({ 
       ...serverConfig,
       error: 'Failed to fetch API configurations' 
     });

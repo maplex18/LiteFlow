@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection } from "@/app/utils/db";
 import { RowDataPacket } from "mysql2/promise";
 
@@ -22,14 +22,14 @@ export async function POST(request: Request) {
       );
 
       if (!Array.isArray(rows) || rows.length === 0) {
-        return NextResponse.json({ valid: false }, { status: 401 });
+        return liteResponse.json({ valid: false }, { status: 401 });
       }
 
-      return NextResponse.json({ valid: true });
+      return liteResponse.json({ valid: true });
     });
   } catch (error) {
     console.error("Session check error:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "服務器錯誤",
         error: error instanceof Error ? error.message : "未知錯誤",

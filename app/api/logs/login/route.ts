@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection } from "@/app/utils/db";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const { userId, username, ipAddress, userAgent, status, failureReason } = await request.json();
 
     if (!userId || !username || !ipAddress || !status) {
-      return NextResponse.json(
+      return liteResponse.json(
         { message: "缺少必要參數" },
         { status: 400 }
       );
@@ -30,14 +30,14 @@ export async function POST(request: Request) {
         ]
       );
 
-      return NextResponse.json({ 
+      return liteResponse.json({ 
         message: "登入記錄已保存",
         success: true 
       });
     });
   } catch (error) {
     console.error("Error logging login:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "記錄登入失敗",
         error: error instanceof Error ? error.message : "未知錯誤",
@@ -88,14 +88,14 @@ export async function GET(request: Request) {
 
       const [rows] = await connection.execute(query, params);
 
-      return NextResponse.json({
+      return liteResponse.json({
         logs: rows,
         success: true
       });
     });
   } catch (error) {
     console.error("Error fetching login logs:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "獲取登入記錄失敗",
         error: error instanceof Error ? error.message : "未知錯誤",

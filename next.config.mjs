@@ -1,13 +1,13 @@
 import webpack from "webpack";
 
 const mode = process.env.BUILD_MODE ?? "standalone";
-console.log("[Next] build mode", mode);
+console.log("[lite] build mode", mode);
 
 const disableChunk = !!process.env.DISABLE_CHUNK || mode === "export";
-console.log("[Next] build with chunk: ", !disableChunk);
+console.log("[lite] build with chunk: ", !disableChunk);
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+/** @type {import('lite').liteConfig} */
+const liteConfig = {
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -54,7 +54,7 @@ const CorsHeaders = [
 ];
 
 if (mode !== "export") {
-  nextConfig.headers = async () => {
+  liteConfig.headers = async () => {
     return [
       {
         source: "/api/:path*",
@@ -63,7 +63,7 @@ if (mode !== "export") {
     ];
   };
 
-  nextConfig.rewrites = async () => {
+  liteConfig.rewrites = async () => {
     const ret = [
       // adjust for previous version directly using "/api/proxy/" as proxy base route
       // {
@@ -107,4 +107,4 @@ if (mode !== "export") {
   };
 }
 
-export default nextConfig;
+export default liteConfig;

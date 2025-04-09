@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { liteRequest, liteResponse } from "lite/server";
 import { getServerSideConfig } from "../config/server";
 import { OPENAI_BASE_URL, ServiceProvider } from "../constant";
 import { cloudflareAIGatewayUrl } from "../utils/cloudflare";
@@ -6,10 +6,10 @@ import { getModelProvider, isModelAvailableInServer } from "../utils/model";
 
 const serverConfig = getServerSideConfig();
 
-export async function requestOpenai(req: NextRequest) {
+export async function requestOpenai(req: liteRequest) {
   const controller = new AbortController();
 
-  const isAzure = req.nextUrl.pathname.includes("azure/deployments");
+  const isAzure = req.liteUrl.pathname.includes("azure/deployments");
 
   var authValue,
     authHeaderName = "";
@@ -27,7 +27,7 @@ export async function requestOpenai(req: NextRequest) {
     authHeaderName = "Authorization";
   }
 
-  let path = `${req.nextUrl.pathname}`.replaceAll("https://api.openai.com/'", "");
+  let path = `${req.liteUrl.pathname}`.replaceAll("https://api.openai.com/'", "");
 
   let baseUrl =
     (isAzure ? serverConfig.azureUrl : serverConfig.baseUrl) || OPENAI_BASE_URL;
@@ -51,10 +51,10 @@ export async function requestOpenai(req: NextRequest) {
 
   if (isAzure) {
     const azureApiVersion =
-      req?.nextUrl?.searchParams?.get("api-version") ||
+      req?.liteUrl?.searchParams?.get("api-version") ||
       serverConfig.azureApiVersion;
     baseUrl = baseUrl.split("/deployments").shift() as string;
-    path = `${req.nextUrl.pathname.replaceAll(
+    path = `${req.liteUrl.pathname.replaceAll(
       "/api/azure/",
       "",
     )}?api-version=${azureApiVersion}`;
@@ -127,7 +127,7 @@ export async function requestOpenai(req: NextRequest) {
           ServiceProvider.Azure as string,
         )
       ) {
-        return NextResponse.json(
+        return liteResponse.json(
           {
             error: true,
             message: `you are not allowed to use ${jsonBody?.model} model`,

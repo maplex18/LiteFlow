@@ -1,9 +1,9 @@
-import { NextRequest } from "next/server";
+import { liteRequest } from "lite/server";
 import { getServerSideConfig } from "../config/server";
 import md5 from "spark-md5";
 import { ACCESS_CODE_PREFIX, ModelProvider } from "../constant";
 
-function getIP(req: NextRequest) {
+function getIP(req: liteRequest) {
   let ip = req.ip ?? req.headers.get("x-real-ip");
   const forwardedFor = req.headers.get("x-forwarded-for");
 
@@ -24,7 +24,7 @@ function parseApiKey(bearToken: string) {
   };
 }
 
-export function auth(req: NextRequest, modelProvider: ModelProvider) {
+export function auth(req: liteRequest, modelProvider: ModelProvider) {
   const authToken = req.headers.get("Authorization") ?? "";
   
   // check if it is openai api key or user token
@@ -93,7 +93,7 @@ export function auth(req: NextRequest, modelProvider: ModelProvider) {
         break;
       case ModelProvider.GPT:
       default:
-        if (req.nextUrl.pathname.includes("azure/deployments")) {
+        if (req.liteUrl.pathname.includes("azure/deployments")) {
           systemApiKey = serverConfig.azureApiKey;
         } else {
           systemApiKey = serverConfig.apiKey;

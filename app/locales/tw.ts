@@ -61,7 +61,7 @@ const tw = {
     Commands: {
       new: "新建聊天",
       newm: "從大獅範本新建聊天",
-      next: "下一個聊天",
+      lite: "下一個聊天",
       prev: "上一個聊天",
       clear: "清除上下文",
       del: "刪除聊天",

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection } from "@/app/utils/db";
 import { RowDataPacket } from "mysql2/promise";
 import cache from "@/app/utils/cache";
@@ -39,7 +39,7 @@ export async function GET(request: Request) {
             // Extract user IDs
             const onlineUserIds = rows.map(row => row.user_id);
             
-            return NextResponse.json({ 
+            return liteResponse.json({ 
               onlineUserIds,
               count: onlineUserIds.length,
               timestamp: Date.now(),
@@ -60,7 +60,7 @@ export async function GET(request: Request) {
     );
   } catch (error) {
     console.error("Failed to get online users:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "Failed to get online users",
         error: error instanceof Error ? error.message : "Unknown error",
@@ -85,7 +85,7 @@ export async function POST(request: Request) {
     const { userId } = await request.json();
 
     if (!userId) {
-      return NextResponse.json(
+      return liteResponse.json(
         { 
           message: "User ID is required",
           success: false
@@ -109,7 +109,7 @@ export async function POST(request: Request) {
       // Clear the online users cache
       cache.delete(ONLINE_USERS_CACHE_KEY);
 
-      return NextResponse.json({
+      return liteResponse.json({
         message: "User activity updated",
         success: true
       }, {
@@ -120,7 +120,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Error updating user activity:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "Failed to update user activity",
         error: error instanceof Error ? error.message : "Unknown error",

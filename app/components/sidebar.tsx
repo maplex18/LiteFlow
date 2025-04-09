@@ -39,7 +39,7 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 import { isIOS, useMobileScreen } from "../utils";
-import dynamic from "next/dynamic";
+import dynamic from "lite/dynamic";
 import { showConfirm, Selector, showToast } from "./ui-lib";
 import clsx from "clsx";
 import { handleLogout } from "./auth";
@@ -57,9 +57,9 @@ export function useHotKey() {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.altKey || e.ctrlKey) {
         if (e.key === "ArrowUp") {
-          chatStore.nextSession(-1);
+          chatStore.liteSession(-1);
         } else if (e.key === "ArrowDown") {
-          chatStore.nextSession(1);
+          chatStore.liteSession(1);
         }
       }
     };
@@ -99,12 +99,12 @@ export function useDragSideBar() {
       }
       lastUpdateTime.current = Date.now();
       const d = e.clientX - startX.current;
-      const nextWidth = limit(startDragWidth.current + d);
+      const liteWidth = limit(startDragWidth.current + d);
       config.update((config) => {
-        if (nextWidth < MIN_SIDEBAR_WIDTH) {
+        if (liteWidth < MIN_SIDEBAR_WIDTH) {
           config.sidebarWidth = NARROW_SIDEBAR_WIDTH;
         } else {
-          config.sidebarWidth = nextWidth;
+          config.sidebarWidth = liteWidth;
         }
       });
     };

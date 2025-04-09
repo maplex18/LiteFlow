@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { liteResponse } from 'lite/server';
 
 export async function GET(request: Request) {
     const url = new URL(request.url);
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
 
     if (!targetUrl) {
         console.error('[Proxy GET] 未提供 URL 參數');
-        return NextResponse.json({ error: 'No URL provided' }, { status: 400 });
+        return liteResponse.json({ error: 'No URL provided' }, { status: 400 });
     }
 
     // 規範化 URL，確保沒有雙斜線問題
@@ -54,7 +54,7 @@ export async function GET(request: Request) {
         console.log('[Proxy GET] 規範化後的 URL:', targetUrl);
     } catch (error) {
         console.error('[Proxy GET] 無效的 URL 格式:', targetUrl, error);
-        return NextResponse.json({ error: 'Invalid URL format' }, { status: 400 });
+        return liteResponse.json({ error: 'Invalid URL format' }, { status: 400 });
     }
 
     console.log('[Proxy GET] 轉發請求到:', targetUrl);
@@ -77,7 +77,7 @@ export async function GET(request: Request) {
                 statusText: response.statusText,
                 url: targetUrl
             });
-            return NextResponse.json(
+            return liteResponse.json(
                 { error: `Request failed with status: ${response.status}` },
                 { status: response.status }
             );
@@ -93,7 +93,7 @@ export async function GET(request: Request) {
             isArray: Array.isArray(data)
         });
 
-        return NextResponse.json(data, {
+        return liteResponse.json(data, {
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ export async function GET(request: Request) {
             error: error instanceof Error ? error.message : String(error),
             url: targetUrl
         });
-        return NextResponse.json(
+        return liteResponse.json(
             { 
                 error: 'Failed to fetch resource',
                 details: error instanceof Error ? error.message : String(error),
@@ -126,7 +126,7 @@ export async function POST(request: Request) {
 
     if (!targetUrl) {
         console.error('[Proxy POST] 未提供 URL 參數');
-        return NextResponse.json({ error: 'No URL provided' }, { status: 400 });
+        return liteResponse.json({ error: 'No URL provided' }, { status: 400 });
     }
 
     // 規範化 URL，確保沒有雙斜線問題
@@ -169,7 +169,7 @@ export async function POST(request: Request) {
         console.log('[Proxy POST] 規範化後的 URL:', targetUrl);
     } catch (error) {
         console.error('[Proxy POST] 無效的 URL 格式:', targetUrl, error);
-        return NextResponse.json({ error: 'Invalid URL format' }, { status: 400 });
+        return liteResponse.json({ error: 'Invalid URL format' }, { status: 400 });
     }
 
     console.log('[Proxy POST] 轉發請求到:', targetUrl);
@@ -198,7 +198,7 @@ export async function POST(request: Request) {
                 statusText: response.statusText,
                 url: targetUrl
             });
-            return NextResponse.json(
+            return liteResponse.json(
                 { error: `Request failed with status: ${response.status}` },
                 { status: response.status }
             );
@@ -214,7 +214,7 @@ export async function POST(request: Request) {
             isArray: Array.isArray(data)
         });
 
-        return NextResponse.json(data, {
+        return liteResponse.json(data, {
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
@@ -225,7 +225,7 @@ export async function POST(request: Request) {
             error: error instanceof Error ? error.message : String(error),
             url: targetUrl
         });
-        return NextResponse.json(
+        return liteResponse.json(
             { 
                 error: 'Failed to fetch resource',
                 details: error instanceof Error ? error.message : String(error),

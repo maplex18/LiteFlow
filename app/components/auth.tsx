@@ -13,7 +13,7 @@ import { showToast } from "./ui-lib";
 import { useSyncStore } from "../store/sync";
 import { StoreKey } from "../constant";
 import { getLocalAppState, AppState } from "../utils/sync";
-import Image from "next/image";
+import Image from "lite/image";
 import { safeLocalStorage } from "../utils";
 
 interface UserInfo {

@@ -40,7 +40,7 @@ for ((i=1; i<=$MAX_ATTEMPTS; i++)); do
   fi
   
   if [ $i -lt $MAX_ATTEMPTS ]; then
-    echo "Waiting 30 seconds before next attempt..."
+    echo "Waiting 30 seconds before lite attempt..."
     sleep 30
   fi
 done

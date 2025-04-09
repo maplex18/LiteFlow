@@ -318,7 +318,7 @@ export function Sd() {
                                     sdStore.draw = sdImages.filter(
                                       (i: any) => i.id !== item.id,
                                     );
-                                    sdStore.getNextId();
+                                    sdStore.getliteId();
                                   });
                                 }
                               }}

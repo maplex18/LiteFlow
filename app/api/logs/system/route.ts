@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection } from "@/app/utils/db";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const { logType, component, message, stackTrace } = await request.json();
 
     if (!logType || !component || !message) {
-      return NextResponse.json(
+      return liteResponse.json(
         { message: "缺少必要參數" },
         { status: 400 }
       );
@@ -27,14 +27,14 @@ export async function POST(request: Request) {
         ]
       );
 
-      return NextResponse.json({ 
+      return liteResponse.json({ 
         message: "系統記錄已保存",
         success: true 
       });
     });
   } catch (error) {
     console.error("Error logging system event:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "記錄系統事件失敗",
         error: error instanceof Error ? error.message : "未知錯誤",
@@ -85,14 +85,14 @@ export async function GET(request: Request) {
 
       const [rows] = await connection.execute(query, params);
 
-      return NextResponse.json({
+      return liteResponse.json({
         logs: rows,
         success: true
       });
     });
   } catch (error) {
     console.error("Error fetching system logs:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "獲取系統記錄失敗",
         error: error instanceof Error ? error.message : "未知錯誤",

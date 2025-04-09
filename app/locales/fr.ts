@@ -60,7 +60,7 @@ const fr: PartialLocaleType = {
     Commands: {
       new: "Nouvelle discussion",
       newm: "Créer une discussion à partir du masque",
-      next: "Discussion suivante",
+      lite: "Discussion suivante",
       prev: "Discussion précédente",
       clear: "Effacer le contexte",
       del: "Supprimer la discussion",
@@ -309,7 +309,7 @@ const fr: PartialLocaleType = {
         Title: "Utiliser LeoPilot Lite",
         Label: "(La solution la plus rentable)",
         SubTitle:
-          "Officiellement maintenu par NextChat, prêt à l'emploi sans configuration, prend en charge les derniers grands modèles comme OpenAI o1, GPT-4o et Claude-3.5",
+          "Officiellement maintenu par liteChat, prêt à l'emploi sans configuration, prend en charge les derniers grands modèles comme OpenAI o1, GPT-4o et Claude-3.5",
         ChatNow: "Discuter maintenant",
       },
 

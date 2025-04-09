@@ -22,7 +22,7 @@ export const BUILTIN_MASK_STORE = {
 export const BUILTIN_MASKS: BuiltinMask[] = [];
 
 if (typeof window != "undefined") {
-  // run in browser skip in next server
+  // run in browser skip in lite server
   fetch("/masks.json")
     .then((res) => res.json())
     .catch((error) => {

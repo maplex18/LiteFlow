@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @lite/lite/no-img-element */
 import { ChatMessage, useAppConfig, useChatStore } from "../store";
 import Locale from "../locales";
 import styles from "./exporter.module.scss";
@@ -29,8 +29,8 @@ import DownloadIcon from "../icons/download.svg";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MessageSelector, useMessageSelector } from "./message-selector";
 import { Avatar } from "./emoji";
-import dynamic from "next/dynamic";
-import NextImage from "next/image";
+import dynamic from "lite/dynamic";
+import liteImage from "lite/image";
 
 import { toBlob, toPng } from "html-to-image";
 import { DEFAULT_MASK_AVATAR } from "../store/mask";
@@ -81,7 +81,7 @@ function useSteps(
 ) {
   const stepCount = steps.length;
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const nextStep = () =>
+  const liteStep = () =>
     setCurrentStepIndex((currentStepIndex + 1) % stepCount);
   const prevStep = () =>
     setCurrentStepIndex((currentStepIndex - 1 + stepCount) % stepCount);
@@ -89,7 +89,7 @@ function useSteps(
   return {
     currentStepIndex,
     setCurrentStepIndex,
-    nextStep,
+    liteStep,
     prevStep,
     currentStep: steps[currentStepIndex],
   };
@@ -284,7 +284,7 @@ export function RenderExport(props: {
     });
 
     props.onRender(renderMsgs);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -532,7 +532,7 @@ export function ImagePreviewer(props: {
       >
         <div className={styles["chat-info"]}>
           <div className={clsx(styles["logo"], "no-dark")}>
-            {/* <NextImage
+            {/* <liteImage
               src={ChatGptIcon.src}
               alt="logo"
               width={50}
@@ -548,7 +548,7 @@ export function ImagePreviewer(props: {
           <div>
             <div className={styles["main-title"]}>LeoPilot Lite</div>
             <div className={styles["sub-title"]}>
-              github.com/ChatGPTNextWeb/ChatGPT-Next-Web
+              github.com/ChatGPTliteWeb/ChatGPT-lite-Web
             </div>
             <div className={styles["icons"]}>
               <ExportAvatar avatar={config.avatar} />

@@ -6,25 +6,25 @@
 //   ServiceProvider,
 // } from "@/app/constant";
 // import { prettyObject } from "@/app/utils/format";
-// import { NextRequest, NextResponse } from "next/server";
+// import { liteRequest, liteResponse } from "lite/server";
 // import { auth } from "@/app/api/auth";
 // import { isModelAvailableInServer } from "@/app/utils/model";
 
 // const serverConfig = getServerSideConfig();
 
 // export async function handle(
-//   req: NextRequest,
+//   req: liteRequest,
 //   { params }: { params: { path: string[] } },
 // ) {
 //   console.log("[XAI Route] params ", params);
 
 //   if (req.method === "OPTIONS") {
-//     return NextResponse.json({ body: "OK" }, { status: 200 });
+//     return liteResponse.json({ body: "OK" }, { status: 200 });
 //   }
 
 //   const authResult = auth(req, ModelProvider.XAI);
 //   if (authResult.error) {
-//     return NextResponse.json(authResult, {
+//     return liteResponse.json(authResult, {
 //       status: 401,
 //     });
 //   }
@@ -34,15 +34,15 @@
 //     return response;
 //   } catch (e) {
 //     console.error("[XAI] ", e);
-//     return NextResponse.json(prettyObject(e));
+//     return liteResponse.json(prettyObject(e));
 //   }
 // }
 
-// async function request(req: NextRequest) {
+// async function request(req: liteRequest) {
 //   const controller = new AbortController();
 
 //   // alibaba use base url or just remove the path
-//   let path = `${req.nextUrl.pathname}`.replaceAll(ApiPath.XAI, "");
+//   let path = `${req.liteUrl.pathname}`.replaceAll(ApiPath.XAI, "");
 
 //   let baseUrl = serverConfig.xaiUrl || XAI_BASE_URL;
 
@@ -94,7 +94,7 @@
 //           ServiceProvider.XAI as string,
 //         )
 //       ) {
-//         return NextResponse.json(
+//         return liteResponse.json(
 //           {
 //             error: true,
 //             message: `you are not allowed to use ${jsonBody?.model} model`,

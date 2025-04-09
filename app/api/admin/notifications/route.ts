@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection } from "@/app/utils/db";
 import { RowDataPacket, ResultSetHeader } from "mysql2/promise";
 import cache from "@/app/utils/cache";
@@ -67,7 +67,7 @@ export async function GET(request: Request) {
             );
             
             // 確保返回的是有效的 JSON 數據
-            return NextResponse.json({ 
+            return liteResponse.json({ 
               notifications: rows,
               timestamp: Date.now(),
               success: true
@@ -87,7 +87,7 @@ export async function GET(request: Request) {
     );
   } catch (error) {
     console.error("獲取通知列表失敗:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "獲取通知列表失敗",
         error: error instanceof Error ? error.message : "未知錯誤",
@@ -115,7 +115,7 @@ export async function POST(request: Request) {
 
     // 驗證必要欄位
     if (!title || !content || !sender_id) {
-      return NextResponse.json(
+      return liteResponse.json(
         { message: "標題、內容和發送者ID為必填欄位" },
         { status: 400 }
       );
@@ -129,7 +129,7 @@ export async function POST(request: Request) {
       ); 
 
       if (senders.length === 0) {
-        return NextResponse.json(
+        return liteResponse.json(
           { message: "發送者不存在" },
           { status: 404 }
         );
@@ -137,7 +137,7 @@ export async function POST(request: Request) {
 
       const sender = senders[0];
       if (sender.role !== "admin") {
-        return NextResponse.json(
+        return liteResponse.json(
           { message: "只有管理員可以發送通知" },
           { status: 403 }
         );
@@ -151,7 +151,7 @@ export async function POST(request: Request) {
         );
 
         if (recipients.length === 0) {
-          return NextResponse.json(
+          return liteResponse.json(
             { message: "接收者不存在" },
             { status: 404 }
           );
@@ -262,14 +262,14 @@ export async function POST(request: Request) {
       // 清除通知列表緩存
       cache.delete(CACHE_KEYS.ALL_NOTIFICATIONS);
 
-      return NextResponse.json({
+      return liteResponse.json({
         message: "通知創建成功",
         notification
       });
     });
   } catch (error) {
     console.error("Error creating notification:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "創建通知失敗",
         error: error instanceof Error ? error.message : "未知錯誤"
@@ -286,7 +286,7 @@ export async function DELETE(request: Request) {
     const id = url.searchParams.get('id');
 
     if (!id) {
-      return NextResponse.json(
+      return liteResponse.json(
         { message: "通知ID為必填參數" },
         { status: 400 }
       );
@@ -300,7 +300,7 @@ export async function DELETE(request: Request) {
       );
 
       if (notifications.length === 0) {
-        return NextResponse.json(
+        return liteResponse.json(
           { message: "通知不存在" },
           { status: 404 }
         );
@@ -350,14 +350,14 @@ export async function DELETE(request: Request) {
       // 清除通知列表緩存
       cache.delete(CACHE_KEYS.ALL_NOTIFICATIONS);
 
-      return NextResponse.json({
+      return liteResponse.json({
         message: "通知刪除成功",
         notification_id: id
       });
     });
   } catch (error) {
     console.error("Error deleting notification:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "刪除通知失敗",
         error: error instanceof Error ? error.message : "未知錯誤"

@@ -63,7 +63,7 @@ const en: LocaleType = {
     Commands: {
       new: "Start a new chat",
       newm: "Start a new chat with mask",
-      next: "Next Chat",
+      lite: "lite Chat",
       prev: "Previous Chat",
       clear: "Clear Context",
       fork: "Copy Chat",
@@ -321,7 +321,7 @@ const en: LocaleType = {
         Title: "Use LeoPilot Lite",
         Label: " (Most Cost-Effective Option)",
         SubTitle:
-          "Maintained by NextChat, zero setup needed, unlock OpenAI o1, GPT-4o," +
+          "Maintained by liteChat, zero setup needed, unlock OpenAI o1, GPT-4o," +
           " Claude-3.5 and more",
         ChatNow: "Start Now",
       },

@@ -77,7 +77,7 @@ import {
 
 import { uploadImage as uploadImageRemote } from "@/app/utils/chat";
 
-import dynamic from "next/dynamic";
+import dynamic from "lite/dynamic";
 
 import { ChatControllerPool } from "../client/controller";
 import { DalleSize, DalleQuality, DalleStyle } from "../typing";
@@ -124,7 +124,7 @@ import { isEmpty } from "lodash-es";
 import { getModelProvider } from "../utils/model";
 import { RealtimeChat } from "@/app/components/realtime-chat";
 import clsx from "clsx";
-import Image from "next/image";
+import Image from "lite/image";
 import { groupBy } from "lodash-es";
 
 const localStorage = safeLocalStorage();
@@ -303,11 +303,11 @@ export function PromptHints(props: {
       const changeIndex = (delta: number) => {
         e.stopPropagation();
         e.preventDefault();
-        const nextIndex = Math.max(
+        const liteIndex = Math.max(
           0,
           Math.min(props.prompts.length - 1, selectIndex + delta),
         );
-        setSelectIndex(nextIndex);
+        setSelectIndex(liteIndex);
         selectedRef.current?.scrollIntoView({
           block: "center",
         });
@@ -328,7 +328,7 @@ export function PromptHints(props: {
     window.addEventListener("keydown", onKeyDown);
 
     return () => window.removeEventListener("keydown", onKeyDown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, [props.prompts.length, selectIndex]);
 
   if (noPrompts) return null;
@@ -487,12 +487,12 @@ export function ChatActions(props: {
 
   // switch themes
   const theme = config.theme;
-  function nextTheme() {
+  function liteTheme() {
     const themes = [Theme.Auto, Theme.Light, Theme.Dark];
     const themeIndex = themes.indexOf(theme);
-    const nextIndex = (themeIndex + 1) % themes.length;
-    const nextTheme = themes[nextIndex];
-    config.update((config) => (config.theme = nextTheme));
+    const liteIndex = (themeIndex + 1) % themes.length;
+    const liteTheme = themes[liteIndex];
+    config.update((config) => (config.theme = liteTheme));
   }
 
   // stop all responses
@@ -553,16 +553,16 @@ export function ChatActions(props: {
     // switch to first available model
     const isUnavailableModel = !models.some((m) => m.name === currentModel);
     if (isUnavailableModel && models.length > 0) {
-      // show next model to default model if exist
-      let nextModel = models.find((model) => model.isDefault) || models[0];
+      // show lite model to default model if exist
+      let liteModel = models.find((model) => model.isDefault) || models[0];
       chatStore.updateTargetSession(session, (session) => {
-        session.mask.modelConfig.model = nextModel.name;
-        session.mask.modelConfig.providerName = nextModel?.provider?.providerName as ServiceProvider;
+        session.mask.modelConfig.model = liteModel.name;
+        session.mask.modelConfig.providerName = liteModel?.provider?.providerName as ServiceProvider;
       });
       showToast(
-        nextModel?.provider?.providerName === "ByteDance"
-          ? nextModel.displayName
-          : nextModel.name,
+        liteModel?.provider?.providerName === "ByteDance"
+          ? liteModel.displayName
+          : liteModel.name,
       );
     }
   }, [chatStore, currentModel, models, props, session]);
@@ -600,7 +600,7 @@ export function ChatActions(props: {
           />
         )}
         <ChatAction
-          onClick={nextTheme}
+          onClick={liteTheme}
           text={Locale.Chat.InputActions.Theme[theme]}
           icon={
             <>
@@ -1108,15 +1108,15 @@ function _Chat() {
     },
   );
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-lite-line react-hooks/exhaustive-deps
   useEffect(measure, [userInput]);
 
   // chat commands shortcuts
   const chatCommands = useChatCommand({
     new: () => chatStore.newSession(),
     newm: () => navigate(Path.NewChat),
-    prev: () => chatStore.nextSession(-1),
-    next: () => chatStore.nextSession(1),
+    prev: () => chatStore.liteSession(-1),
+    lite: () => chatStore.liteSession(1),
     clear: () =>
       chatStore.updateTargetSession(
         session,
@@ -1292,7 +1292,7 @@ function _Chat() {
         session.mask.modelConfig = { ...config.modelConfig };
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, [session]);
 
   // check if should send message
@@ -1342,7 +1342,7 @@ function _Chat() {
 
   const onResend = (message: ChatMessage) => {
     // when it is resending a message
-    // 1. for a user's message, find the next bot response
+    // 1. for a user's message, find the lite bot response
     // 2. for a bot's message, find the last user's input
     // 3. delete original user input and bot's message
     // 4. resend the user's input
@@ -1586,12 +1586,12 @@ function _Chat() {
       const isTouchBottomEdge = bottomHeight <= edgeThreshold;
 
       const prevPageMsgIndex = msgRenderIndex - CHAT_PAGE_SIZE;
-      const nextPageMsgIndex = msgRenderIndex + CHAT_PAGE_SIZE;
+      const litePageMsgIndex = msgRenderIndex + CHAT_PAGE_SIZE;
 
       if (isTouchTopEdge && !isTouchBottomEdge) {
         setMsgRenderIndex(Math.max(0, prevPageMsgIndex));
       } else if (isTouchBottomEdge) {
-        setMsgRenderIndex(Math.min(renderMessages.length - CHAT_PAGE_SIZE, nextPageMsgIndex));
+        setMsgRenderIndex(Math.min(renderMessages.length - CHAT_PAGE_SIZE, litePageMsgIndex));
       }
     }
 
@@ -1703,7 +1703,7 @@ function _Chat() {
     return () => {
       localStorage.setItem(key, dom?.value ?? "");
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePaste = useCallback(

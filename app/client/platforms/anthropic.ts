@@ -110,9 +110,9 @@ export class ClaudeApi implements LLMApi {
     // roles must alternate between "user" and "assistant" in claude, so add a fake assistant message between two user messages
     for (let i = 0; i < messages.length - 1; i++) {
       const message = messages[i];
-      const nextMessage = messages[i + 1];
+      const liteMessage = messages[i + 1];
 
-      if (keys.includes(message.role) && keys.includes(nextMessage.role)) {
+      if (keys.includes(message.role) && keys.includes(liteMessage.role)) {
         messages[i] = [
           message,
           {

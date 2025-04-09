@@ -1,12 +1,12 @@
-/* eslint-disable @next/next/no-page-custom-font */
+/* eslint-disable @lite/lite/no-page-custom-font */
 import "./styles/globals.scss";
 import "./styles/markdown.scss";
 import "./styles/highlight.scss";
 import { getClientConfig } from "./config/client";
-import type { Metadata, Viewport } from "next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata, Viewport } from "lite";
+import { SpeedInsights } from "@vercel/speed-insights/lite";
 import { getServerSideConfig } from "./config/server";
-import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleTagManager, GoogleAnalytics } from "@lite/third-parties/google";
 const serverConfig = getServerSideConfig();
 
 export const metadata: Metadata = {

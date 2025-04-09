@@ -28,14 +28,14 @@ export function useCommand(commands: Commands = {}) {
     if (shouldUpdate) {
       setSearchParams(searchParams);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, [searchParams, commands]);
 }
 
 interface ChatCommands {
   new?: Command;
   newm?: Command;
-  next?: Command;
+  lite?: Command;
   prev?: Command;
   clear?: Command;
   fork?: Command;

@@ -127,7 +127,7 @@ export function MessageSelector(props: {
     if (props.defaultSelectAll) {
       selectAll();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -140,7 +140,7 @@ export function MessageSelector(props: {
         selection.add(messages[i].id ?? i);
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, [startIndex, endIndex]);
 
   return (

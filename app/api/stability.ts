@@ -1,16 +1,16 @@
-import { NextRequest, NextResponse } from "next/server";
+import { liteRequest, liteResponse } from "lite/server";
 import { getServerSideConfig } from "@/app/config/server";
 import { ModelProvider, STABILITY_BASE_URL } from "@/app/constant";
 import { auth } from "@/app/api/auth";
 
 export async function handle(
-  req: NextRequest,
+  req: liteRequest,
   { params }: { params: { path: string[] } },
 ) {
   console.log("[Stability] params ", params);
 
   if (req.method === "OPTIONS") {
-    return NextResponse.json({ body: "OK" }, { status: 200 });
+    return liteResponse.json({ body: "OK" }, { status: 200 });
   }
 
   const controller = new AbortController();
@@ -27,7 +27,7 @@ export async function handle(
     baseUrl = baseUrl.slice(0, -1);
   }
 
-  let path = `${req.nextUrl.pathname}`.replaceAll("/api/stability/", "");
+  let path = `${req.liteUrl.pathname}`.replaceAll("/api/stability/", "");
 
   console.log("[Stability Proxy] ", path);
   console.log("[Stability Base Url]", baseUrl);
@@ -42,7 +42,7 @@ export async function handle(
   const authResult = auth(req, ModelProvider.Stability);
 
   if (authResult.error) {
-    return NextResponse.json(authResult, {
+    return liteResponse.json(authResult, {
       status: 401,
     });
   }
@@ -53,7 +53,7 @@ export async function handle(
   const key = token ? token : serverConfig.stabilityApiKey;
 
   if (!key) {
-    return NextResponse.json(
+    return liteResponse.json(
       {
         error: true,
         message: `missing STABILITY_API_KEY in server env vars`,

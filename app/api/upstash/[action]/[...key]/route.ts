@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { liteRequest, liteResponse } from "lite/server";
 
 async function handle(
-  req: NextRequest,
+  req: liteRequest,
   { params }: { params: { action: string; key: string[] } },
 ) {
   try {
@@ -19,14 +19,14 @@ async function handle(
     const endpoint = requestUrl.searchParams.get("endpoint");
 
     if (req.method === "OPTIONS") {
-      return NextResponse.json({ body: "OK" }, { status: 200 });
+      return liteResponse.json({ body: "OK" }, { status: 200 });
     }
     const [...key] = params.key;
 
     // Validate endpoint
     if (!endpoint) {
       console.error("[Upstash Action Route] Missing endpoint");
-      return NextResponse.json(
+      return liteResponse.json(
         {
           error: true,
           msg: "Missing endpoint parameter",
@@ -46,7 +46,7 @@ async function handle(
       });
     } catch (e) {
       console.error("[Upstash Action Route] Invalid endpoint URL:", endpoint, e);
-      return NextResponse.json(
+      return liteResponse.json(
         {
           error: true,
           msg: "Invalid endpoint URL",
@@ -59,7 +59,7 @@ async function handle(
     // only allow to request to *.upstash.io
     if (!endpointUrl.hostname.endsWith(".upstash.io")) {
       console.error("[Upstash Action Route] Invalid hostname:", endpointUrl.hostname);
-      return NextResponse.json(
+      return liteResponse.json(
         {
           error: true,
           msg: "Only upstash.io endpoints are allowed",
@@ -71,7 +71,7 @@ async function handle(
     // only allow upstash get and set method
     if (params.action !== "get" && params.action !== "set") {
       console.error("[Upstash Action Route] forbidden action:", params.action);
-      return NextResponse.json(
+      return liteResponse.json(
         {
           error: true,
           msg: "Only get and set actions are allowed",
@@ -156,7 +156,7 @@ async function handle(
         
         // 對於 400 錯誤，返回更詳細的信息
         if (fetchResult.status === 400) {
-          return NextResponse.json(
+          return liteResponse.json(
             {
               error: true,
               msg: "Bad Request to Upstash",
@@ -180,7 +180,7 @@ async function handle(
         stack: fetchError instanceof Error ? fetchError.stack : undefined,
         url: targetUrl
       });
-      return NextResponse.json(
+      return liteResponse.json(
         {
           error: true,
           msg: "Failed to fetch from Upstash",
@@ -195,7 +195,7 @@ async function handle(
       error: error instanceof Error ? error.message : String(error),
       stack: error instanceof Error ? error.stack : undefined
     });
-    return NextResponse.json(
+    return liteResponse.json(
       {
         error: true,
         msg: "Internal server error",

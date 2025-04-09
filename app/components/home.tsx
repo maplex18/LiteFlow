@@ -10,7 +10,7 @@ import LoadingIcon from "../icons/three-dots.svg";
 
 import { getCSSVar, useMobileScreen, safeLocalStorage } from "../utils";
 
-import dynamic from "next/dynamic";
+import dynamic from "lite/dynamic";
 import { Path, SlotID } from "../constant";
 import { ErrorBoundary } from "./error";
 
@@ -392,7 +392,7 @@ export function useLoadData() {
       const models = await api.llm.models();
       config.mergeModels(models);
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, []);
 }
 

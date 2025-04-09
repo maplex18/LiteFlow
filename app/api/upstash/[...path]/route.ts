@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { liteRequest, liteResponse } from "lite/server";
 
 export const runtime = "nodejs";
 
 export async function GET(
-  req: NextRequest,
+  req: liteRequest,
   { params }: { params: { path: string[] } }
 ) {
   try {
@@ -12,10 +12,10 @@ export async function GET(
       url: req.url
     });
 
-    const endpoint = req.nextUrl.searchParams.get("endpoint");
+    const endpoint = req.liteUrl.searchParams.get("endpoint");
     if (!endpoint) {
       console.error("[Upstash Path Route] Missing endpoint");
-      return NextResponse.json({ error: "Missing endpoint" }, { status: 400 });
+      return liteResponse.json({ error: "Missing endpoint" }, { status: 400 });
     }
 
     // 構建目標 URL，確保沒有多餘的斜線
@@ -46,7 +46,7 @@ export async function GET(
           statusText: response.statusText,
           url
         });
-        return NextResponse.json(
+        return liteResponse.json(
           { error: `Request failed with status: ${response.status}` },
           { status: response.status }
         );
@@ -58,10 +58,10 @@ export async function GET(
         hasData: !!data
       });
 
-      return NextResponse.json(data);
+      return liteResponse.json(data);
     } catch (fetchError) {
       console.error("[Upstash Path Route] 請求出錯:", fetchError);
-      return NextResponse.json(
+      return liteResponse.json(
         { 
           error: "Failed to fetch from Upstash",
           details: fetchError instanceof Error ? fetchError.message : String(fetchError)
@@ -71,7 +71,7 @@ export async function GET(
     }
   } catch (error) {
     console.error("[Upstash Path Route] 處理請求出錯:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       { 
         error: "Failed to fetch from Upstash",
         details: error instanceof Error ? error.message : String(error)
@@ -82,7 +82,7 @@ export async function GET(
 }
 
 export async function POST(
-  req: NextRequest,
+  req: liteRequest,
   { params }: { params: { path: string[] } }
 ) {
   try {
@@ -91,10 +91,10 @@ export async function POST(
       url: req.url
     });
 
-    const endpoint = req.nextUrl.searchParams.get("endpoint");
+    const endpoint = req.liteUrl.searchParams.get("endpoint");
     if (!endpoint) {
       console.error("[Upstash Path Route] Missing endpoint");
-      return NextResponse.json({ error: "Missing endpoint" }, { status: 400 });
+      return liteResponse.json({ error: "Missing endpoint" }, { status: 400 });
     }
 
     // 構建目標 URL，確保沒有多餘的斜線
@@ -127,7 +127,7 @@ export async function POST(
           statusText: response.statusText,
           url
         });
-        return NextResponse.json(
+        return liteResponse.json(
           { error: `Request failed with status: ${response.status}` },
           { status: response.status }
         );
@@ -139,10 +139,10 @@ export async function POST(
         hasData: !!data
       });
 
-      return NextResponse.json(data);
+      return liteResponse.json(data);
     } catch (fetchError) {
       console.error("[Upstash Path Route] 請求出錯:", fetchError);
-      return NextResponse.json(
+      return liteResponse.json(
         { 
           error: "Failed to fetch from Upstash",
           details: fetchError instanceof Error ? fetchError.message : String(fetchError)
@@ -152,7 +152,7 @@ export async function POST(
     }
   } catch (error) {
     console.error("[Upstash Path Route] 處理請求出錯:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       { 
         error: "Failed to fetch from Upstash",
         details: error instanceof Error ? error.message : String(error)

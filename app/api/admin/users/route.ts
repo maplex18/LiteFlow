@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection } from "@/app/utils/db";
 import sha256 from "crypto-js/sha256";
 import { v4 as uuidv4 } from "uuid";
@@ -47,7 +47,7 @@ export async function GET(request: Request) {
                FROM Account 
                ORDER BY role = 'admin' DESC, username ASC`
             );
-            return NextResponse.json({ 
+            return liteResponse.json({ 
               users: rows,
               timestamp: Date.now(),
               success: true
@@ -67,7 +67,7 @@ export async function GET(request: Request) {
     );
   } catch (error) {
     console.error("獲取用戶列表失敗:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "獲取用戶列表失敗",
         error: error instanceof Error ? error.message : "未知錯誤",
@@ -116,7 +116,7 @@ export async function POST(request: Request) {
       );
 
       if (existingUsers.length > 0) {
-        return NextResponse.json(
+        return liteResponse.json(
           { 
             message: "使用者名稱已存在",
             success: false
@@ -154,7 +154,7 @@ export async function POST(request: Request) {
       // 清除用戶列表緩存
       cache.delete(CACHE_KEYS.ALL_USERS);
 
-      return NextResponse.json({
+      return liteResponse.json({
         message: "使用者創建成功",
         user: (newUser as any)[0],
         success: true
@@ -166,7 +166,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Error creating user:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "創建使用者失敗",
         error: error instanceof Error ? error.message : "未知錯誤",

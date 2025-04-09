@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 
 export const runtime = "edge";
 
@@ -48,7 +48,7 @@ export async function GET(req: Request) {
 
         if (!startDate || !endDate) {
             console.error("[OpenAI Costs API] Missing date parameters");
-            return NextResponse.json(
+            return liteResponse.json(
                 { message: "Start date and end date are required" },
                 { status: 400 }
             );
@@ -57,7 +57,7 @@ export async function GET(req: Request) {
         // 如果沒有API密鑰，生成模擬數據
         if (!apiKey) {
             console.error("[OpenAI Costs API] Admin API key not found, generating mock data");
-            return NextResponse.json(generateMockCostData(startDate, endDate));
+            return liteResponse.json(generateMockCostData(startDate, endDate));
         }
 
         // 原始API調用邏輯
@@ -132,14 +132,14 @@ export async function GET(req: Request) {
         };
 
         console.log("[OpenAI Costs API] Successfully processed cost data:", transformedData);
-        return NextResponse.json(transformedData);
+        return liteResponse.json(transformedData);
     } catch (error) {
         console.error("[OpenAI Costs API] Error fetching costs:", error);
         // 返回模擬數據而不是錯誤，確保UI始終有內容顯示
         const url = new URL(req.url);
         const startDate = url.searchParams.get('start_date') || getDefaultStartDate();
         const endDate = url.searchParams.get('end_date') || getDefaultEndDate();
-        return NextResponse.json(generateMockCostData(startDate, endDate));
+        return liteResponse.json(generateMockCostData(startDate, endDate));
     }
 }
 

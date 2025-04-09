@@ -4,7 +4,7 @@ import { LLMModel } from "../client/api";
 const CustomSeq = {
   val: -1000, //To ensure the custom model located at front, start from -1000, refer to constant.ts
   cache: new Map<string, number>(),
-  next: (id: string) => {
+  lite: (id: string) => {
     if (CustomSeq.cache.has(id)) {
       return CustomSeq.cache.get(id) as number;
     } else {
@@ -19,7 +19,7 @@ const customProvider = (providerName: string) => ({
   id: providerName.toLowerCase(),
   providerName: providerName,
   providerType: "custom",
-  sorted: CustomSeq.next(providerName),
+  sorted: CustomSeq.lite(providerName),
 });
 
 /**
@@ -126,7 +126,7 @@ export function collectModelTable(
             displayName: displayName || customModelName,
             available,
             provider, // Use optional chaining
-            sorted: CustomSeq.next(`${customModelName}@${provider?.id}`),
+            sorted: CustomSeq.lite(`${customModelName}@${provider?.id}`),
           };
         }
       }

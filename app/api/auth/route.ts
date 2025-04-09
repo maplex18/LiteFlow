@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection, getApiKeyFromDb } from "@/app/utils/db";
 import { RowDataPacket } from "mysql2/promise";
 import { v4 as uuidv4 } from 'uuid';
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
           ]
         );
 
-        return NextResponse.json(
+        return liteResponse.json(
           { message: "使用者名或密碼錯誤" },
           { status: 401 },
         );
@@ -69,7 +69,7 @@ export async function POST(request: Request) {
           ]
         );
 
-        return NextResponse.json(
+        return liteResponse.json(
           { message: "使用者名或密碼錯誤" },
           { status: 401 },
         );
@@ -77,7 +77,7 @@ export async function POST(request: Request) {
 
       // 檢查是否有其他裝置登入
       if (user.sessionToken && !forceLogin) {
-        return NextResponse.json(
+        return liteResponse.json(
           { 
             message: "此帳號已在其他裝置登入",
             requireForceLogin: true,
@@ -124,7 +124,7 @@ export async function POST(request: Request) {
       const openaiApiKey = await getApiKeyFromDb("OPENAI_API_KEY");
       console.log("[Auth API] OpenAI API Key from database:", openaiApiKey ? "有值" : "無值", "長度:", openaiApiKey.length);
 
-      return NextResponse.json({
+      return liteResponse.json({
         user: {
           ...rows[0],
           password: undefined,
@@ -140,7 +140,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Login error:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "服務器錯誤",
         error: error instanceof Error ? error.message : "未知錯誤",
@@ -163,7 +163,7 @@ export async function DELETE(request: Request) {
       );
 
       if (!Array.isArray(rows) || rows.length === 0) {
-        return NextResponse.json(
+        return liteResponse.json(
           { message: "無效的 session" },
           { status: 401 },
         );
@@ -175,11 +175,11 @@ export async function DELETE(request: Request) {
         [userId],
       );
 
-      return NextResponse.json({ message: "登出成功" });
+      return liteResponse.json({ message: "登出成功" });
     });
   } catch (error) {
     console.error("Logout error:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "服務器錯誤",
         error: error instanceof Error ? error.message : "未知錯誤",

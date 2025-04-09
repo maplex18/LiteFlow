@@ -46,7 +46,7 @@ import {
 import Locale, { Lang, AllLangs, ALL_LANG_OPTIONS, changeLang, getLang, setItem, LANG_KEY } from "../locales";
 
 import { copyToClipboard, clientUpdate, semverCompare } from "../utils";
-import Link from "next/link";
+import Link from "lite/link";
 import {
   Anthropic,
   Azure,
@@ -754,7 +754,7 @@ export function Settings() {
 
   const enabledAccessControl = useMemo(
     () => accessStore.enabledAccessControl(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
     [],
   );
 
@@ -768,7 +768,7 @@ export function Settings() {
     // checks per minutes
     checkUpdate();
     showUsage && checkUsage();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -787,7 +787,7 @@ export function Settings() {
     return () => {
       document.removeEventListener("keydown", keydownEvent);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, [clientConfig]);
 
   const showAccessCode = enabledAccessControl && !clientConfig?.isApp;

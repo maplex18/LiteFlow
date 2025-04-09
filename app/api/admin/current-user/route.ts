@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection } from "@/app/utils/db";
 
 export async function GET(request: Request) {
@@ -6,7 +6,7 @@ export async function GET(request: Request) {
         // 從 localStorage 獲取用戶信息
         const userInfoStr = request.headers.get("X-User-Info");
         if (!userInfoStr) {
-            return NextResponse.json(
+            return liteResponse.json(
                 { message: "未找到用戶信息" },
                 { status: 401 }
             );
@@ -20,17 +20,17 @@ export async function GET(request: Request) {
             );
 
             if (!(users as any[])[0]) {
-                return NextResponse.json(
+                return liteResponse.json(
                     { message: "未找到用戶" },
                     { status: 404 }
                 );
             }
 
-            return NextResponse.json((users as any[])[0]);
+            return liteResponse.json((users as any[])[0]);
         });
     } catch (error) {
         console.error("Error getting current user:", error);
-        return NextResponse.json(
+        return liteResponse.json(
             {
                 message: "獲取當前用戶失敗",
                 error: error instanceof Error ? error.message : "未知錯誤"

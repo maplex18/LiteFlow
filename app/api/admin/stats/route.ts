@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { liteResponse } from 'lite/server';
 import { withDbConnection } from "@/app/utils/db";
 import { RowDataPacket } from "mysql2/promise";
 import cache from "@/app/utils/cache";
@@ -67,7 +67,7 @@ export async function GET() {
             const newNotificationsCount = newNotificationsResult[0].count;
 
             // 返回統計數據
-            return NextResponse.json({
+            return liteResponse.json({
               users: {
                 total: userCount,
                 admin: adminCount,
@@ -92,7 +92,7 @@ export async function GET() {
     );
   } catch (error) {
     console.error("獲取統計數據失敗:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "獲取統計數據失敗",
         error: error instanceof Error ? error.message : "未知錯誤",
@@ -108,13 +108,13 @@ export async function POST() {
     // 清除統計數據緩存
     cache.delete(CACHE_KEYS.ADMIN_STATS);
     
-    return NextResponse.json({
+    return liteResponse.json({
       message: "統計數據緩存已清除",
       success: true,
     });
   } catch (error) {
     console.error("清除統計數據緩存失敗:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "清除統計數據緩存失敗",
         error: error instanceof Error ? error.message : "未知錯誤",

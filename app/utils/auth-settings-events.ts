@@ -1,4 +1,4 @@
-import { sendGAEvent } from "@next/third-parties/google";
+import { sendGAEvent } from "@lite/third-parties/google";
 
 export function trackConversationGuideToCPaymentClick() {
   sendGAEvent("event", "ConversationGuideToCPaymentClick", { value: 1 });

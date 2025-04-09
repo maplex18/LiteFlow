@@ -4,7 +4,7 @@ import { IconButton } from "./button";
 import { Input } from "./ui-lib";
 import { Path } from "../constant";
 import styles from "./sme_register.module.scss";
-import Image from "next/image";
+import Image from "lite/image";
 
 export function SMERegisterPage() {
   const navigate = useNavigate();

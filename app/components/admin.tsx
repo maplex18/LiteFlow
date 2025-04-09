@@ -24,7 +24,7 @@ import HomeIcon from "../icons/home.svg";
 import UsersIcon from "../icons/users.svg";
 import StatsIcon from "../icons/stats.svg";
 import SearchIcon from "../icons/search.svg";
-import Image from "next/image";
+import Image from "lite/image";
 import AddIcon from "../icons/add.svg";
 import { AdminNotifications } from "./admin-notifications";
 
@@ -124,7 +124,7 @@ interface OpenAIUsageResponse {
     }>;
   }>;
   has_more: boolean;
-  next_page: string;
+  lite_page: string;
 }
 
 interface OpenAICostData {
@@ -1359,7 +1359,7 @@ export function AdminPage() {
               });
               fetchOpenAIUsage();
             }}
-            title="Next Week"
+            title="lite Week"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M10 6L8.59 7.41L13.17 12L8.59 16.59L10 18L16 12L10 6Z" fill="currentColor"/>

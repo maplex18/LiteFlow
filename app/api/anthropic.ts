@@ -7,7 +7,7 @@ import {
   ModelProvider,
 } from "@/app/constant";
 import { prettyObject } from "@/app/utils/format";
-import { NextRequest, NextResponse } from "next/server";
+import { liteRequest, liteResponse } from "lite/server";
 import { auth } from "./auth";
 import { isModelAvailableInServer } from "@/app/utils/model";
 import { cloudflareAIGatewayUrl } from "@/app/utils/cloudflare";
@@ -15,20 +15,20 @@ import { cloudflareAIGatewayUrl } from "@/app/utils/cloudflare";
 const ALLOWD_PATH = new Set([Anthropic.ChatPath, Anthropic.ChatPath1]);
 
 export async function handle(
-  req: NextRequest,
+  req: liteRequest,
   { params }: { params: { path: string[] } },
 ) {
 
 
   if (req.method === "OPTIONS") {
-    return NextResponse.json({ body: "OK" }, { status: 200 });
+    return liteResponse.json({ body: "OK" }, { status: 200 });
   }
 
   const subpath = params.path.join("/");
 
   if (!ALLOWD_PATH.has(subpath)) {
 
-    return NextResponse.json(
+    return liteResponse.json(
       {
         error: true,
         msg: "you are not allowed to request " + subpath,
@@ -41,7 +41,7 @@ export async function handle(
 
   const authResult = auth(req, ModelProvider.Claude);
   if (authResult.error) {
-    return NextResponse.json(authResult, {
+    return liteResponse.json(authResult, {
       status: 401,
     });
   }
@@ -51,13 +51,13 @@ export async function handle(
     return response;
   } catch (e) {
     console.error("[Anthropic] ", e);
-    return NextResponse.json(prettyObject(e));
+    return liteResponse.json(prettyObject(e));
   }
 }
 
 const serverConfig = getServerSideConfig();
 
-async function request(req: NextRequest) {
+async function request(req: liteRequest) {
   const controller = new AbortController();
 
   let authHeaderName = "x-api-key";
@@ -67,7 +67,7 @@ async function request(req: NextRequest) {
     serverConfig.anthropicApiKey ||
     "";
 
-  let path = `${req.nextUrl.pathname}`.replaceAll(ApiPath.Anthropic, "");
+  let path = `${req.liteUrl.pathname}`.replaceAll(ApiPath.Anthropic, "");
 
   let baseUrl =
     serverConfig.anthropicUrl || serverConfig.baseUrl || ANTHROPIC_BASE_URL;
@@ -125,7 +125,7 @@ async function request(req: NextRequest) {
           ServiceProvider.Anthropic as string,
         )
       ) {
-        return NextResponse.json(
+        return liteResponse.json(
           {
             error: true,
             message: `you are not allowed to use ${jsonBody?.model} model`,

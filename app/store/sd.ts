@@ -33,7 +33,7 @@ export const useSdStore = createPersistStore<
     currentParams: any;
   },
   {
-    getNextId: () => number;
+    getliteId: () => number;
     sendTask: (data: any, okCall?: Function) => void;
     updateDraw: (draw: any) => void;
     setCurrentModel: (model: any) => void;
@@ -50,7 +50,7 @@ export const useSdStore = createPersistStore<
     }
 
     const methods = {
-      getNextId() {
+      getliteId() {
         const id = ++_get().currentId;
         set({ currentId: id });
         return id;
@@ -58,7 +58,7 @@ export const useSdStore = createPersistStore<
       sendTask(data: any, okCall?: Function) {
         data = { ...data, id: nanoid(), status: "running" };
         set({ draw: [data, ..._get().draw] });
-        this.getNextId();
+        this.getliteId();
         this.stabilityRequestCall(data);
         okCall?.();
       },
@@ -97,7 +97,7 @@ export const useSdStore = createPersistStore<
                 status: "error",
                 error: resData.errors[0],
               });
-              this.getNextId();
+              this.getliteId();
               return;
             }
             const self = this;
@@ -126,12 +126,12 @@ export const useSdStore = createPersistStore<
                 error: JSON.stringify(resData),
               });
             }
-            this.getNextId();
+            this.getliteId();
           })
           .catch((error) => {
             this.updateDraw({ ...data, status: "error", error: error.message });
             console.error("Error:", error);
-            this.getNextId();
+            this.getliteId();
           });
       },
       updateDraw(_draw: any) {

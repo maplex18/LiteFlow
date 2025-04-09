@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { headers } from "next/headers";
+import { liteResponse } from "lite/server";
+import { headers } from "lite/headers";
 
 export const runtime = "nodejs";
 
@@ -21,7 +21,7 @@ export async function GET(request: Request) {
   const sessionToken = url.searchParams.get("sessionToken");
 
   if (!userId || !sessionToken) {
-    return new NextResponse("Missing credentials", { status: 401 });
+    return new liteResponse("Missing credentials", { status: 401 });
   }
 
   const userIdNum = parseInt(userId);
@@ -55,7 +55,7 @@ export async function GET(request: Request) {
     }
   });
 
-  return new NextResponse(stream, {
+  return new liteResponse(stream, {
     headers: {
       "Content-Type": "text/event-stream",
       "Cache-Control": "no-cache",

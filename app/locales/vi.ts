@@ -59,7 +59,7 @@ const vi: PartialLocaleType = {
     Commands: {
       new: "Tạo cuộc trò chuyện mới",
       newm: "Tạo cuộc trò chuyện từ mặt nạ",
-      next: "Cuộc trò chuyện tiếp theo",
+      lite: "Cuộc trò chuyện tiếp theo",
       prev: "Cuộc trò chuyện trước đó",
       clear: "Xóa ngữ cảnh",
       del: "Xóa cuộc trò chuyện",
@@ -297,7 +297,7 @@ const vi: PartialLocaleType = {
         Title: "Sử dụng LeoPilot Lite",
         Label: "(Giải pháp tiết kiệm chi phí nhất)",
         SubTitle:
-          "Được NextChat chính thức duy trì, sẵn sàng sử dụng mà không cần cấu hình, hỗ trợ các mô hình lớn mới nhất như OpenAI o1, GPT-4o và Claude-3.5",
+          "Được liteChat chính thức duy trì, sẵn sàng sử dụng mà không cần cấu hình, hỗ trợ các mô hình lớn mới nhất như OpenAI o1, GPT-4o và Claude-3.5",
         ChatNow: "Chat ngay",
       },
 

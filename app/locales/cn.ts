@@ -58,7 +58,7 @@ const cn = {
     Commands: {
       new: "新建聊天",
       newm: "从面具新建聊天",
-      next: "下一个聊天",
+      lite: "下一个聊天",
       prev: "上一个聊天",
       clear: "清除上下文",
       fork: "复制聊天",
@@ -314,7 +314,7 @@ const cn = {
         Title: "使用 LeoPilot Lite",
         Label: "（性价比最高的方案）",
         SubTitle:
-          "由 NextChat 官方维护, 零配置开箱即用，支持 OpenAI o1, GPT-4o, Claude-3.5 等最新大模型",
+          "由 liteChat 官方维护, 零配置开箱即用，支持 OpenAI o1, GPT-4o, Claude-3.5 等最新大模型",
         ChatNow: "立刻对话",
       },
       AccessCode: {

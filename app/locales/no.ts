@@ -61,7 +61,7 @@ const no: PartialLocaleType = {
     Commands: {
       new: "Ny samtale",
       newm: "Start samtale fra maske",
-      next: "Neste samtale",
+      lite: "Neste samtale",
       prev: "Forrige samtale",
       clear: "Rydd kontekst",
       del: "Slett samtale",

@@ -48,7 +48,7 @@ function useMaskGroup(masks: Mask[]) {
 
       const randomMask = () => masks[Math.floor(Math.random() * masks.length)];
       let maskIndex = 0;
-      const nextMask = () => masks[maskIndex++ % masks.length];
+      const liteMask = () => masks[maskIndex++ % masks.length];
 
       const rows = Math.ceil(maxHeight / maskItemHeight);
       const cols = Math.ceil(maxWidth / maskItemWidth);
@@ -58,7 +58,7 @@ function useMaskGroup(masks: Mask[]) {
         .map((_, _i) =>
           new Array(cols)
             .fill(0)
-            .map((_, j) => (j < 1 || j > cols - 2 ? randomMask() : nextMask())),
+            .map((_, j) => (j < 1 || j > cols - 2 ? randomMask() : liteMask())),
         );
 
       setGroups(newGroups);
@@ -68,7 +68,7 @@ function useMaskGroup(masks: Mask[]) {
 
     window.addEventListener("resize", computeGroup);
     return () => window.removeEventListener("resize", computeGroup);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-lite-line react-hooks/exhaustive-deps
   }, []);
 
   return groups;

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { liteRequest, liteResponse } from "lite/server";
 import { STORAGE_KEY, internalAllowedWebDavEndpoints } from "../../../constant";
 import { getServerSideConfig } from "@/app/config/server";
 
@@ -18,11 +18,11 @@ const normalizeUrl = (url: string) => {
 };
 
 async function handle(
-  req: NextRequest,
+  req: liteRequest,
   { params }: { params: { path: string[] } },
 ) {
   if (req.method === "OPTIONS") {
-    return NextResponse.json({ body: "OK" }, { status: 200 });
+    return liteResponse.json({ body: "OK" }, { status: 200 });
   }
   const folder = STORAGE_KEY;
   const fileName = `${folder}/backup.json`;
@@ -47,7 +47,7 @@ async function handle(
       );
     })
   ) {
-    return NextResponse.json(
+    return liteResponse.json(
       {
         error: true,
         msg: "Invalid endpoint",
@@ -71,7 +71,7 @@ async function handle(
     proxy_method !== "GET" &&
     proxy_method !== "PUT"
   ) {
-    return NextResponse.json(
+    return liteResponse.json(
       {
         error: true,
         msg: "you are not allowed to request " + targetPath,
@@ -84,7 +84,7 @@ async function handle(
 
   // for MKCOL request, only allow request ${folder}
   if (proxy_method === "MKCOL" && !targetPath.endsWith(folder)) {
-    return NextResponse.json(
+    return liteResponse.json(
       {
         error: true,
         msg: "you are not allowed to request " + targetPath,
@@ -97,7 +97,7 @@ async function handle(
 
   // for GET request, only allow request ending with fileName
   if (proxy_method === "GET" && !targetPath.endsWith(fileName)) {
-    return NextResponse.json(
+    return liteResponse.json(
       {
         error: true,
         msg: "you are not allowed to request " + targetPath,
@@ -110,7 +110,7 @@ async function handle(
 
   //   for PUT request, only allow request ending with fileName
   if (proxy_method === "PUT" && !targetPath.endsWith(fileName)) {
-    return NextResponse.json(
+    return liteResponse.json(
       {
         error: true,
         msg: "you are not allowed to request " + targetPath,

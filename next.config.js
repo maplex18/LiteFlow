@@ -1,5 +1,5 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+/** @type {import('lite').liteConfig} */
+const liteConfig = {
   output: 'standalone',
   env: {
     DB_HOST: process.env.DB_HOST,
@@ -75,4 +75,4 @@ const nextConfig = {
   }
 }
 
-module.exports = nextConfig 
+module.exports = liteConfig 

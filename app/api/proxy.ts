@@ -1,25 +1,25 @@
-import { NextRequest, NextResponse } from "next/server";
+import { liteRequest, liteResponse } from "lite/server";
 import { getServerSideConfig } from "@/app/config/server";
 
 export async function handle(
-  req: NextRequest,
+  req: liteRequest,
   { params }: { params: { path: string[] } },
 ) {
   console.log("[Proxy Route] params ", params);
 
   if (req.method === "OPTIONS") {
-    return NextResponse.json({ body: "OK" }, { status: 200 });
+    return liteResponse.json({ body: "OK" }, { status: 200 });
   }
   const serverConfig = getServerSideConfig();
 
   // remove path params from searchParams
-  req.nextUrl.searchParams.delete("path");
-  req.nextUrl.searchParams.delete("provider");
+  req.liteUrl.searchParams.delete("path");
+  req.liteUrl.searchParams.delete("provider");
 
   const subpath = params.path.join("/");
   const fetchUrl = `${req.headers.get(
     "x-base-url",
-  )}/${subpath}?${req.nextUrl.searchParams.toString()}`;
+  )}/${subpath}?${req.liteUrl.searchParams.toString()}`;
   const skipHeaders = ["connection", "host", "origin", "referer", "cookie"];
   const headers = new Headers(
     Array.from(req.headers.entries()).filter((item) => {
@@ -37,7 +37,7 @@ export async function handle(
     const baseUrl = req.headers.get("x-base-url");
     if (baseUrl?.includes("api.openai.com")) {
       if (!serverConfig.apiKey) {
-        return NextResponse.json(
+        return liteResponse.json(
           { error: "OpenAI API key not configured" },
           { status: 500 },
         );

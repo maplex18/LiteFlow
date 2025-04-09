@@ -60,7 +60,7 @@ const de: PartialLocaleType = {
     Commands: {
       new: "Neues Gespräch",
       newm: "Neues Gespräch aus Maske erstellen",
-      next: "Nächstes Gespräch",
+      lite: "Nächstes Gespräch",
       prev: "Vorheriges Gespräch",
       clear: "Kontext löschen",
       del: "Gespräch löschen",
@@ -306,7 +306,7 @@ const de: PartialLocaleType = {
         Title: "LeoPilot Lite verwenden",
         Label: "(Die kosteneffektivste Lösung)",
         SubTitle:
-          "Offiziell von NextChat verwaltet, sofort einsatzbereit ohne Konfiguration, unterstützt die neuesten großen Modelle wie OpenAI o1, GPT-4o und Claude-3.5",
+          "Offiziell von liteChat verwaltet, sofort einsatzbereit ohne Konfiguration, unterstützt die neuesten großen Modelle wie OpenAI o1, GPT-4o und Claude-3.5",
         ChatNow: "Jetzt chatten",
       },
 

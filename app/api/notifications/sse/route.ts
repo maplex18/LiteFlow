@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 
 export const runtime = "nodejs";
 
@@ -64,7 +64,7 @@ export async function GET(request: Request) {
   
   // 如果是預檢請求或來源不在允許列表中，返回 CORS 錯誤
   if (!origin || !allowedOrigins.includes(origin)) {
-    return new NextResponse("CORS error: Origin not allowed", { 
+    return new liteResponse("CORS error: Origin not allowed", { 
       status: 403,
       headers: {
         "Content-Type": "text/plain",
@@ -73,7 +73,7 @@ export async function GET(request: Request) {
   }
 
   if (!userId || !token) {
-    return new NextResponse("Missing credentials", { 
+    return new liteResponse("Missing credentials", { 
       status: 401,
       headers: {
         "Content-Type": "text/plain",
@@ -155,7 +155,7 @@ export async function GET(request: Request) {
       }
     });
 
-    return new NextResponse(readable, {
+    return new liteResponse(readable, {
       headers: {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache, no-transform",
@@ -169,7 +169,7 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error("SSE 連接創建錯誤:", error);
-    return new NextResponse(JSON.stringify({ error: "SSE 連接創建失敗" }), {
+    return new liteResponse(JSON.stringify({ error: "SSE 連接創建失敗" }), {
       status: 500,
       headers: {
         "Content-Type": "application/json",
@@ -188,7 +188,7 @@ export async function OPTIONS(request: Request) {
   
   // 如果來源不在允許列表中，返回 CORS 錯誤
   if (!origin || !allowedOrigins.includes(origin)) {
-    return new NextResponse(null, { 
+    return new liteResponse(null, { 
       status: 204,
       headers: {
         "Content-Type": "text/plain",
@@ -197,7 +197,7 @@ export async function OPTIONS(request: Request) {
   }
   
   // 返回 CORS 預檢響應
-  return new NextResponse(null, {
+  return new liteResponse(null, {
     status: 204,
     headers: {
       "Access-Control-Allow-Origin": origin,

@@ -59,7 +59,7 @@ const cs: PartialLocaleType = {
     Commands: {
       new: "Nová konverzace",
       newm: "Nová konverzace z masky",
-      next: "Další konverzace",
+      lite: "Další konverzace",
       prev: "Předchozí konverzace",
       clear: "Vymazat kontext",
       del: "Smazat konverzaci",
@@ -298,7 +298,7 @@ const cs: PartialLocaleType = {
         Title: "Použití LeoPilot Lite",
         Label: "(Nejlepší nákladově efektivní řešení)",
         SubTitle:
-          "Oficiálně udržováno NextChat, připraveno k použití bez konfigurace, podporuje nejnovější velké modely jako OpenAI o1, GPT-4o, Claude-3.5",
+          "Oficiálně udržováno liteChat, připraveno k použití bez konfigurace, podporuje nejnovější velké modely jako OpenAI o1, GPT-4o, Claude-3.5",
         ChatNow: "Začněte chatovat nyní",
       },
 

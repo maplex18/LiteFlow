@@ -48,9 +48,9 @@ RUN apk add proxychains-ng
 ENV NODE_ENV=production
 
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/.next/server ./.next/server
+COPY --from=builder /app/.lite/standalone ./
+COPY --from=builder /app/.lite/static ./.lite/static
+COPY --from=builder /app/.lite/server ./.lite/server
 
 EXPOSE 3000
 

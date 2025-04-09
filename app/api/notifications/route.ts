@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection } from "@/app/utils/db";
 import { RowDataPacket, ResultSetHeader } from "mysql2/promise";
 
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
 
     
     if (!userInfoStr) {
-      return NextResponse.json(
+      return liteResponse.json(
         { message: "未找到用戶信息" },
         { status: 401 }
       );
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
       userInfo = JSON.parse(userInfoStr);
     } catch (error) {
       console.error("解析用戶信息失敗:", error);
-      return NextResponse.json(
+      return liteResponse.json(
         { message: "用戶信息格式錯誤" },
         { status: 400 }
       );
@@ -53,7 +53,7 @@ export async function GET(request: Request) {
 
 
       if (users.length === 0) {
-        return NextResponse.json(
+        return liteResponse.json(
           { message: "用戶不存在" },
           { status: 404 }
         );
@@ -73,11 +73,11 @@ export async function GET(request: Request) {
       const [notifications] = await connection.execute<NotificationRow[]>(query, [userId]);
       
 
-      return NextResponse.json({ notifications });
+      return liteResponse.json({ notifications });
     });
   } catch (error) {
     console.error("Error fetching notifications:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "獲取通知失敗",
         error: error instanceof Error ? error.message : "未知錯誤"
@@ -94,7 +94,7 @@ export async function PUT(request: Request) {
     const userInfoStr = request.headers.get("X-User-Info");
     
     if (!userInfoStr) {
-      return NextResponse.json(
+      return liteResponse.json(
         { message: "未找到用戶信息" },
         { status: 401 }
       );
@@ -111,7 +111,7 @@ export async function PUT(request: Request) {
       );
 
       if (users.length === 0) {
-        return NextResponse.json(
+        return liteResponse.json(
           { message: "用戶不存在" },
           { status: 404 }
         );
@@ -127,7 +127,7 @@ export async function PUT(request: Request) {
       );
 
       if (notifications.length === 0) {
-        return NextResponse.json(
+        return liteResponse.json(
           { message: "通知不存在或不屬於該用戶" },
           { status: 404 }
         );
@@ -139,11 +139,11 @@ export async function PUT(request: Request) {
         [notification_id]
       );
 
-      return NextResponse.json({ message: "通知已標記為已讀" });
+      return liteResponse.json({ message: "通知已標記為已讀" });
     });
   } catch (error) {
     console.error("Error marking notification as read:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "標記通知失敗",
         error: error instanceof Error ? error.message : "未知錯誤"
@@ -159,7 +159,7 @@ export async function PATCH(request: Request) {
     const userInfoStr = request.headers.get("X-User-Info");
     
     if (!userInfoStr) {
-      return NextResponse.json(
+      return liteResponse.json(
         { message: "未找到用戶信息" },
         { status: 401 }
       );
@@ -176,7 +176,7 @@ export async function PATCH(request: Request) {
       );
 
       if (users.length === 0) {
-        return NextResponse.json(
+        return liteResponse.json(
           { message: "用戶不存在" },
           { status: 404 }
         );
@@ -191,11 +191,11 @@ export async function PATCH(request: Request) {
         [userId]
       );
 
-      return NextResponse.json({ message: "所有通知已標記為已讀" });
+      return liteResponse.json({ message: "所有通知已標記為已讀" });
     });
   } catch (error) {
     console.error("Error marking all notifications as read:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "標記所有通知失敗",
         error: error instanceof Error ? error.message : "未知錯誤"

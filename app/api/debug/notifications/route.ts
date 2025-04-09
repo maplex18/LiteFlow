@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection } from "@/app/utils/db";
 import { RowDataPacket } from "mysql2/promise";
 
@@ -37,7 +37,7 @@ export async function GET(request: Request) {
       `SELECT user_id, username FROM Account`
     );
     
-    return NextResponse.json({ 
+    return liteResponse.json({ 
       notifications: rows,
       users,
       query,
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
     });
   }).catch((error) => {
     console.error("Database error:", error);
-    return NextResponse.json(
+    return liteResponse.json(
       {
         message: "獲取通知列表失敗",
         error: error instanceof Error ? error.message : "未知錯誤",

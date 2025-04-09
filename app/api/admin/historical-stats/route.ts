@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection } from "@/app/utils/db";
 
 export const runtime = "nodejs";
@@ -29,11 +29,11 @@ export async function GET() {
                 ORDER BY hour_start ASC
             `);
 
-            return NextResponse.json(rows);
+            return liteResponse.json(rows);
         });
     } catch (error) {
         console.error("Error fetching historical stats:", error);
-        return NextResponse.json(
+        return liteResponse.json(
             {
                 message: "獲取歷史數據失敗",
                 error: error instanceof Error ? error.message : "未知錯誤"

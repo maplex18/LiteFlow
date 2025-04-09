@@ -1,8 +1,8 @@
 import type { Config } from "jest";
-import nextJest from "next/jest.js";
+import liteJest from "lite/jest.js";
 
-const createJestConfig = nextJest({
-  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+const createJestConfig = liteJest({
+  // Provide the path to your lite.js app to load lite.config.js and .env files in your test environment
   dir: "./",
 });
 
@@ -17,5 +17,5 @@ const config: Config = {
   },
 };
 
-// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
+// createJestConfig is exported this way to ensure that lite/jest can load the lite.js config which is async
 export default createJestConfig(config);

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { liteRequest, liteResponse } from "lite/server";
 import { auth } from "./auth";
 import { getServerSideConfig } from "@/app/config/server";
 import { ApiPath, GEMINI_BASE_URL, ModelProvider } from "@/app/constant";
@@ -7,18 +7,18 @@ import { prettyObject } from "@/app/utils/format";
 const serverConfig = getServerSideConfig();
 
 export async function handle(
-  req: NextRequest,
+  req: liteRequest,
   { params }: { params: { provider: string; path: string[] } },
 ) {
   console.log("[Google Route] params ", params);
 
   if (req.method === "OPTIONS") {
-    return NextResponse.json({ body: "OK" }, { status: 200 });
+    return liteResponse.json({ body: "OK" }, { status: 200 });
   }
 
   const authResult = auth(req, ModelProvider.GeminiPro);
   if (authResult.error) {
-    return NextResponse.json(authResult, {
+    return liteResponse.json(authResult, {
       status: 401,
     });
   }
@@ -30,7 +30,7 @@ export async function handle(
   const apiKey = token ? token : serverConfig.googleApiKey;
 
   if (!apiKey) {
-    return NextResponse.json(
+    return liteResponse.json(
       {
         error: true,
         message: `missing GOOGLE_API_KEY in server env vars`,
@@ -45,7 +45,7 @@ export async function handle(
     return response;
   } catch (e) {
     console.error("[Google] ", e);
-    return NextResponse.json(prettyObject(e));
+    return liteResponse.json(prettyObject(e));
   }
 }
 
@@ -68,13 +68,13 @@ export const preferredRegion = [
   "syd1",
 ];
 
-async function request(req: NextRequest, apiKey: string) {
+async function request(req: liteRequest, apiKey: string) {
   const controller = new AbortController();
 
   let baseUrl = serverConfig.googleUrl || GEMINI_BASE_URL;
   const apiVersion = serverConfig.googleApiVersion || "v1";
 
-  let path = `${req.nextUrl.pathname}`.replaceAll(ApiPath.Google, "");
+  let path = `${req.liteUrl.pathname}`.replaceAll(ApiPath.Google, "");
   
   if (!path.includes(apiVersion)) {
     path = `/${apiVersion}${path}`;
@@ -99,7 +99,7 @@ async function request(req: NextRequest, apiKey: string) {
   );
 
   const fetchUrl = `${baseUrl}${path}${path.includes("?") ? "&" : "?"}key=${apiKey}${
-    req?.nextUrl?.searchParams?.get("alt") === "sse" ? "&alt=sse" : ""
+    req?.liteUrl?.searchParams?.get("alt") === "sse" ? "&alt=sse" : ""
   }`;
 
   console.log("[Google API Fetch Url] ", fetchUrl);

@@ -1,8 +1,8 @@
 import md5 from "spark-md5";
-import { NextRequest, NextResponse } from "next/server";
+import { liteRequest, liteResponse } from "lite/server";
 import { getServerSideConfig } from "@/app/config/server";
 
-async function handle(req: NextRequest, res: NextResponse) {
+async function handle(req: liteRequest, res: liteResponse) {
   const serverConfig = getServerSideConfig();
   const storeUrl = () =>
     `https://api.cloudflare.com/client/v4/accounts/${serverConfig.cloudflareAccountId}/storage/kv/namespaces/${serverConfig.cloudflareKVNamespaceId}`;
@@ -39,18 +39,18 @@ async function handle(req: NextRequest, res: NextResponse) {
     const result = await res.json();
 
     if (result?.success) {
-      return NextResponse.json(
+      return liteResponse.json(
         { code: 0, id: hashedCode, result },
         { status: res.status },
       );
     }
-    return NextResponse.json(
+    return liteResponse.json(
       { error: true, msg: "Save data error" },
       { status: 400 },
     );
   }
   if (req.method === "GET") {
-    const id = req?.nextUrl?.searchParams?.get("id");
+    const id = req?.liteUrl?.searchParams?.get("id");
     const res = await fetch(`${storeUrl()}/values/${id}`, {
       headers: storeHeaders(),
       method: "GET",
@@ -61,7 +61,7 @@ async function handle(req: NextRequest, res: NextResponse) {
       headers: res.headers,
     });
   }
-  return NextResponse.json(
+  return liteResponse.json(
     { error: true, msg: "Invalid request" },
     { status: 400 },
   );

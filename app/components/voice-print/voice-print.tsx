@@ -132,13 +132,13 @@ export function VoicePrint({ frequencies, isActive }: VoicePrintProps) {
         if (i === points.length - 1) {
           ctx.lineTo(x, symmetricY);
         } else {
-          const nextPoint = points[i + 1];
-          const midX = (nextPoint[0] + x) / 2;
+          const litePoint = points[i + 1];
+          const midX = (litePoint[0] + x) / 2;
           ctx.quadraticCurveTo(
-            nextPoint[0],
-            centerY - (nextPoint[1] - centerY),
+            litePoint[0],
+            centerY - (litePoint[1] - centerY),
             midX,
-            centerY - ((nextPoint[1] + y) / 2 - centerY),
+            centerY - ((litePoint[1] + y) / 2 - centerY),
           );
         }
       }

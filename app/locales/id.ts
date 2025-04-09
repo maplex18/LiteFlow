@@ -59,7 +59,7 @@ const id: PartialLocaleType = {
     Commands: {
       new: "Obrolan Baru",
       newm: "Buat Obrolan Baru dari Masker",
-      next: "Obrolan Berikutnya",
+      lite: "Obrolan Berikutnya",
       prev: "Obrolan Sebelumnya",
       clear: "Hapus Konteks",
       del: "Hapus Obrolan",
@@ -299,7 +299,7 @@ const id: PartialLocaleType = {
         Title: "Gunakan LeoPilot Lite",
         Label: "(Solusi paling hemat biaya)",
         SubTitle:
-          "Dikelola secara resmi oleh NextChat, siap digunakan tanpa konfigurasi, mendukung model besar terbaru seperti OpenAI o1, GPT-4o, dan Claude-3.5",
+          "Dikelola secara resmi oleh liteChat, siap digunakan tanpa konfigurasi, mendukung model besar terbaru seperti OpenAI o1, GPT-4o, dan Claude-3.5",
         ChatNow: "Chat Sekarang",
       },
 

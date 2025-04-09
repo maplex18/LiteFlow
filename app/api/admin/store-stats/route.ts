@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { liteResponse } from "lite/server";
 import { withDbConnection } from "@/app/utils/db";
 import { format } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
                 flatValues
             );
 
-            return NextResponse.json({
+            return liteResponse.json({
                 message: "統計資料儲存成功",
                 result,
                 dailyStats
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
         });
     } catch (error) {
         console.error("Error storing stats:", error);
-        return NextResponse.json(
+        return liteResponse.json(
             {
                 message: "儲存統計資料失敗",
                 error: error instanceof Error ? error.message : "未知錯誤"

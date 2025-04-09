@@ -60,7 +60,7 @@ const sk: PartialLocaleType = {
     Commands: {
       new: "Začať nový chat",
       newm: "Začať nový chat s maskou",
-      next: "Ďalší Chat",
+      lite: "Ďalší Chat",
       prev: "Predchádzajúci Chat",
       clear: "Vymazať kontext",
       del: "Vymazať Chat",
@@ -295,7 +295,7 @@ const sk: PartialLocaleType = {
         Title: "Použite LeoPilot Lite",
         Label: "(Najvýhodnejšie riešenie)",
         SubTitle:
-          "Oficiálne udržiavané NextChat, pripravené na použitie bez konfigurácie, podporuje najnovšie veľké modely ako OpenAI o1, GPT-4o a Claude-3.5",
+          "Oficiálne udržiavané liteChat, pripravené na použitie bez konfigurácie, podporuje najnovšie veľké modely ako OpenAI o1, GPT-4o a Claude-3.5",
         ChatNow: "Chatovať teraz",
       },
 

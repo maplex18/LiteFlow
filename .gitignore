@@ -8,8 +8,8 @@
 # testing
 /coverage
 
-# next.js
-/.next/
+# lite.js
+/.lite/
 /out/
 
 
@@ -31,7 +31,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
+lite-env.d.ts
 dev
 
 .vscode
